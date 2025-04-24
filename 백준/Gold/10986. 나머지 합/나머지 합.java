@@ -16,7 +16,7 @@ public class Main {
 
 		long res = 0;
 		int remainder;
-		long [] C = new long[M];
+		long[] C = new long[M];
 		for (int i = 1; i <= N; i++) {
 			remainder = (int) (S[i] % M);
 			if (remainder == 0) {
