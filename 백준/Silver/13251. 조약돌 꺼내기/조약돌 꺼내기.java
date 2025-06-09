@@ -16,11 +16,13 @@ public class Main {
 		int K = Integer.parseInt(br.readLine());
 		double result = 0.0;
 		for (int i = 1; i <= M; i++) {
-			double temp = 1.0;
-			for (int j = 0; j < K; j++) {
-				temp *= (color[i] - j) / (double) (N - j);
+			if (color[i] >= K) {
+				double temp = 1.0;
+				for (int j = 0; j < K; j++) {
+					temp *= (color[i] - j) / (double) (N - j);
+				}
+				result += temp;
 			}
-			result += temp;
 		}
 		bw.write(result + "\n");
 		bw.flush();
