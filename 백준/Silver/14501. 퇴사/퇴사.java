@@ -16,10 +16,10 @@ public class Main {
 			P[i] = Integer.parseInt(st.nextToken());
 		}
 		for (int i = N; i > 0; i--) {
-			if (i + T[i] - 1 > N) {
+			if (i + T[i] > N + 1) {
 				D[i] = D[i + 1];
 			} else {
-				D[i] = Math.max(D[i + 1], P[i] + D[i + T[i]]);
+				D[i] = Math.max(D[i + 1], D[i + T[i]] + P[i]);
 			}
 		}
 		bw.write(D[1] + "\n");
