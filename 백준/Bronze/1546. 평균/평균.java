@@ -7,20 +7,16 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int N = Integer.parseInt(br.readLine());
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int[] scores = new int[N];
-		for (int i = 0; i < N; i++) {
-			scores[i] = Integer.parseInt(st.nextToken());
-		}
-		int max = scores[0];
-		for (int i = 1; i < N; i++) {
-			max = Math.max(max, scores[i]);
+		int[] A = new int[N];
+		int max = 0;
+		for(int i=0; i<N; i++) {
+			A[i] = Integer.parseInt(st.nextToken());
+			max = Math.max(max, A[i]);
 		}
 		double sum = 0.0;
-		for (int i = 0; i < N; i++) {
-			sum += (double) scores[i] / (double) max * 100.0;
-		}
-		double avg = sum / N;
-		bw.write(avg + "\n");
+		for(int i=0; i<N; i++)
+			sum += A[i] / (double)max * 100;
+		bw.write(sum/N + "\n");
 		bw.flush();
 		bw.close();
 		br.close();
