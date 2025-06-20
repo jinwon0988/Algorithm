@@ -6,14 +6,14 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int L = Integer.parseInt(br.readLine());
 		String str = br.readLine();
-		int[] A = new int[L];
-		int r = 1;
+		long r = 1;
 		long sum = 0;
-		for (int i = 0; i < str.length(); i++) {
-			sum += (str.charAt(i) - 'a' + 1) * r;
-			r *= 31;
+		int MOD = 1234567891;
+		for (int i = 0; i < L; i++) {
+			sum += ((str.charAt(i) - 'a' + 1) * r) % MOD;
+			r = (r * 31) % MOD;
 		}
-		bw.write(sum + "\n");
+		bw.write(sum % MOD + "\n");
 		bw.flush();
 		bw.close();
 		br.close();
