@@ -2,38 +2,28 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
 		int[] A = new int[N];
 		for (int i = 0; i < N; i++) {
-			A[i] = sc.nextInt();
+			A[i] = Integer.parseInt(br.readLine());
 		}
 		Stack<Integer> stack = new Stack<>();
-		int num = 1;
 		StringBuffer sb = new StringBuffer();
-		boolean result = true;
-		for (int i = 0; i < N; i++) {
-			int su = A[i];
-			if (su >= num) {
-				while (su >= num) {
-					stack.push(num++);
-					sb.append("+\n");
-				}
+		for (int i = 1, j = 0; i <= N; i++) {
+			stack.add(i);
+			sb.append("+\n");
+			while (!stack.empty() && stack.peek() == A[j]) {
 				stack.pop();
 				sb.append("-\n");
-			} else {
-				int n = stack.pop();
-				if (n > su) {
-					System.out.println("NO");
-					result = false;
-					break;
-				} else {
-					sb.append("-\n");
-				}
+				j++;
 			}
 		}
-		if (result)
+		if (!stack.empty())
+			System.out.println("NO");
+		else
 			System.out.println(sb.toString());
+		br.close();
 	}
 }
