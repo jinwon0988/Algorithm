@@ -1,16 +1,17 @@
-import java.util.*;
+import java.io.*;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		String str = sc.next();
-		int[] A = new int[str.length()];
-		for (int i = 0; i < str.length(); i++) {
-			A[i] = Integer.parseInt(str.substring(i, i + 1));
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		String input = br.readLine();
+		int[] A = new int[input.length()];
+		for (int i = 0; i < A.length; i++) {
+			A[i] = Integer.parseInt(input.substring(i, i + 1));
 		}
-		for (int i = 0; i < str.length(); i++) {
+		for (int i = 0; i < A.length; i++) {
 			int max = i;
-			for (int j = i + 1; j < str.length(); j++) {
+			for (int j = i + 1; j < A.length; j++) {
 				if (A[max] < A[j]) {
 					max = j;
 				}
@@ -22,7 +23,10 @@ public class Main {
 			}
 		}
 		for (int i = 0; i < A.length; i++) {
-			System.out.print(A[i]);
+			bw.write(A[i] + "");
 		}
+		bw.flush();
+		bw.close();
+		br.close();
 	}
 }
