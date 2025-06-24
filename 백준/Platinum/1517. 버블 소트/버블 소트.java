@@ -2,56 +2,59 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static long result = 0;
+	static int[] A, tmp;
+	static long result;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int N = Integer.parseInt(br.readLine());
+		A = new int[N];
+		tmp = new int[N];
+		result = 0;
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int[] A = new int[N];
 		for (int i = 0; i < N; i++) {
 			A[i] = Integer.parseInt(st.nextToken());
 		}
-		mergeSort(A, 0, N - 1);
+		mergeSort(0, N - 1);
 		bw.write(result + "\n");
 		bw.flush();
 		bw.close();
+		br.close();
 	}
 
-	private static void mergeSort(int[] A, int left, int right) {
-		if (left < right) {
-			int mid = (left + right) / 2;
-			mergeSort(A, left, mid);
-			mergeSort(A, mid + 1, right);
-			merge(A, left, mid, right);
-		}
-	}
-
-	private static void merge(int[] A, int left, int mid, int right) {
-		int[] temp = new int[right - left + 1];
-		int i = left;
-		int j = mid + 1;
-		int k = 0;
-
-		while (i <= mid && j <= right) {
-			if (A[i] <= A[j]) {
-				temp[k++] = A[i++];
+	public static void mergeSort(int s, int e) {
+		if (e - s < 1)
+			return;
+		int m = s + (e - s) / 2;
+		mergeSort(s, m);
+		mergeSort(m + 1, e);
+		for (int i = s; i <= e; i++)
+			tmp[i] = A[i];
+		int k = s;
+		int index1 = s;
+		int index2 = m + 1;
+		while (index1 <= m && index2 <= e) {
+			if (tmp[index1] > tmp[index2]) {
+				A[k] = tmp[index2];
+				result += index2 - k;
+				k++;
+				index2++;
 			} else {
-				temp[k++] = A[j++];
-				result += mid - i + 1;
+				A[k] = tmp[index1];
+				k++;
+				index1++;
 			}
 		}
-		while (i <= mid) {
-			temp[k++] = A[i++];
+		while (index1 <= m) {
+			A[k] = tmp[index1];
+			k++;
+			index1++;
 		}
-
-		while (j <= right) {
-			temp[k++] = A[j++];
-		}
-
-		for (int t = 0; t < temp.length; t++) {
-			A[left + t] = temp[t];
+		while (index2 <= e) {
+			A[k] = tmp[index2];
+			k++;
+			index2++;
 		}
 	}
 }
