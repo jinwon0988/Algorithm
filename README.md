@@ -16,3 +16,7 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 1. 하루에 **1문제 이상** 풀기 ✅
 2. **백준 티어 플래티넘 V** 달성하기 🥇
 3. **PCCP LV.3** 도전하기 🚀
+
+## 🔥 solved.ac 스트릭
+
+[![mazandi profile](https://mazandi.herokuapp.com/api?handle=jinwon0988&theme=warm)](https://solved.ac/jinwon0988)
