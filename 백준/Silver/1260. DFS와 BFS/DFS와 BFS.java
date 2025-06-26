@@ -2,9 +2,9 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static boolean visited[];
-	static ArrayList<Integer>[] A;
 	static BufferedWriter bw;
+	static ArrayList<Integer>[] A;
+	static boolean[] visited;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,46 +15,46 @@ public class Main {
 		int V = Integer.parseInt(st.nextToken());
 		A = new ArrayList[N + 1];
 		for (int i = 1; i <= N; i++) {
-			A[i] = new ArrayList<Integer>();
+			A[i] = new ArrayList<>();
 		}
+		visited = new boolean[N + 1];
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
-			int S = Integer.parseInt(st.nextToken());
-			int E = Integer.parseInt(st.nextToken());
-			A[S].add(E);
-			A[E].add(S);
+			int s = Integer.parseInt(st.nextToken());
+			int e = Integer.parseInt(st.nextToken());
+			A[s].add(e);
+			A[e].add(s);
 		}
 		for (int i = 1; i <= N; i++) {
 			Collections.sort(A[i]);
 		}
-		visited = new boolean[N + 1];
 		DFS(V);
 		bw.write("\n");
-		bw.flush();
 		visited = new boolean[N + 1];
 		BFS(V);
 		bw.flush();
 		bw.close();
+		br.close();
 	}
 
-	private static void DFS(int Node) throws Exception {
-		bw.write(Node + " ");
-		visited[Node] = true;
-		for (int i : A[Node]) {
+	public static void DFS(int node) throws Exception {
+		bw.write(node + " ");
+		visited[node] = true;
+		for (int i : A[node]) {
 			if (!visited[i]) {
 				DFS(i);
 			}
 		}
 	}
 
-	private static void BFS(int Node) throws Exception {
-		Queue<Integer> queue = new LinkedList<Integer>();
-		queue.add(Node);
-		visited[Node] = true;
+	public static void BFS(int node) throws Exception {
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(node);
+		visited[node] = true;
 		while (!queue.isEmpty()) {
-			int now_Node = queue.poll();
-			bw.write(now_Node + " ");
-			for (int i : A[now_Node]) {
+			int now = queue.poll();
+			bw.write(now + " ");
+			for (int i : A[now]) {
 				if (!visited[i]) {
 					queue.add(i);
 					visited[i] = true;
