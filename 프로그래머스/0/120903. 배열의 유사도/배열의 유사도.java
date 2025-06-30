@@ -9,8 +9,8 @@ class Solution {
             for(int j=0; j<s2.length; j++) {
                 if(s1[i].equals(s2[j])) {
                     answer++;
+                    break;
                 }
-                if(s1[i].charAt(0) < s2[j].charAt(0)) break;
             }
         }
         return answer;
