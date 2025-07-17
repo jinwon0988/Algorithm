@@ -6,8 +6,8 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int A = Integer.parseInt(st.nextToken());
-		int B = Integer.parseInt(st.nextToken());
+		long A = Long.parseLong(st.nextToken());
+		long B = Long.parseLong(st.nextToken());
 		bw.write((A + B) * (A - B) + "\n");
 		bw.close();
 		br.close();
