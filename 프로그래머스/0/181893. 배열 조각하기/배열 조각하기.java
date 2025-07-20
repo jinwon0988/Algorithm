@@ -2,24 +2,17 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] arr, int[] query) {
-        ArrayList<Integer> A = new ArrayList<>();
-        for(int i=0; i<arr.length; i++) {
-            A.add(arr[i]);
-        }
+        int s = 0, e = arr.length-1;
         for(int i=0; i<query.length; i++) {
             if(i % 2 == 0) {
-                for(int j=A.size()-1; j>=query[i]+1; j--) {
-                    A.remove(j);
-                }
+                e = s + query[i];
             }else{
-                for(int j=query[i]-1; j>=0; j--) {
-                    A.remove(j);
-                }
+                s = s + query[i];
             }
         }
-        int[] answer = new int[A.size()];
-        for(int i=0; i<answer.length; i++) {
-            answer[i] = A.get(i);
+        int[] answer = new int[e-s+1];
+        for(int i=s, idx=0; i<=e; i++) {
+            answer[idx++] = arr[i];
         }
         return answer;
     }
