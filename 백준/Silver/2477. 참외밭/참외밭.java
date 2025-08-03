@@ -1,25 +1,28 @@
+import java.io.*;
 import java.util.*;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int K = sc.nextInt();
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int K = Integer.parseInt(br.readLine());
 		int[] A = new int[6];
+		StringTokenizer st;
 		for (int i = 0; i < 6; i++) {
-			sc.nextInt();
-			A[i] = sc.nextInt();
+			st = new StringTokenizer(br.readLine());
+			st.nextToken();
+			A[i] = Integer.parseInt(st.nextToken());
 		}
-		int[] B = new int[6];
+		int mulSum = 0;
 		int max = 0;
 		for (int i = 0; i < 6; i++) {
-			B[i] = A[i] * A[(i + 1) % 6];
-			max = Math.max(max, B[i]);
+			mulSum += A[i] * A[(i + 1) % 6];
+			max = Math.max(max, A[i] * A[(i + 1) % 6]);
 		}
-		int no = 3 * max;
-		for (int i = 0; i < 6; i++) {
-			no -= B[i];
-		}
-		System.out.println(K * (max - no));
-		sc.close();
+		int no = 3 * max - mulSum;
+		bw.write((max - no) * K + "\n");
+		bw.flush();
+		bw.close();
+		br.close();
 	}
 }
