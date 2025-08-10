@@ -4,10 +4,10 @@ import java.util.*;
 public class Main {
 	static int[][] A;
 	static boolean[][] visited;
-	static int X;
-	static int Y;
 	static int[] dr = { -1, 0, 1, 0 };
 	static int[] dc = { 0, 1, 0, -1 };
+	static int cheese;
+	static int X, Y;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,29 +22,28 @@ public class Main {
 				A[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		int count = 0;
-		int ccount = 0;
-		int rcount = 0;
+		int cnt = 0;
+		cheese = 0;
 		while (true) {
 			visited = new boolean[X][Y];
-			ccount = bfs(0, 0);
-			if (ccount == 0)
+			int count = BFS(0, 0);
+			if (count == 0)
 				break;
-			rcount = ccount;
-			count++;
+			cnt++;
+			cheese = count;
 		}
-		bw.write(count + "\n");
-		bw.write(rcount + "\n");
+		bw.write(cnt + "\n");
+		bw.write(cheese + "\n");
 		bw.flush();
 		bw.close();
 		br.close();
 	}
 
-	public static int bfs(int x, int y) {
-		int count = 0;
+	public static int BFS(int x, int y) {
 		Queue<int[]> queue = new LinkedList<>();
-		queue.offer(new int[] { x, y });
 		visited[x][y] = true;
+		queue.offer(new int[] { x, y });
+		int count = 0;
 		while (!queue.isEmpty()) {
 			int[] now = queue.poll();
 			int r = now[0];
@@ -52,18 +51,16 @@ public class Main {
 			for (int d = 0; d < 4; d++) {
 				int nr = r + dr[d];
 				int nc = c + dc[d];
-				if (!check(nr, nc))
-					continue;
-				if (visited[nr][nc])
+				if (!check(nr, nc) || visited[nr][nc])
 					continue;
 				if (A[nr][nc] == 1) {
 					A[nr][nc] = 0;
-					visited[nr][nc] = true;
 					count++;
-				} else {
-					queue.offer(new int[] { nr, nc });
 					visited[nr][nc] = true;
+					continue;
 				}
+				visited[nr][nc] = true;
+				queue.add(new int[] { nr, nc });
 			}
 		}
 		return count;
