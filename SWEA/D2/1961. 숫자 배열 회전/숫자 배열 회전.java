@@ -1,33 +1,39 @@
+import java.io.*;
 import java.util.*;
 
 public class Solution {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int T = sc.nextInt();
-		for (int test_case = 1; test_case <= T; test_case++) {
-			int N = sc.nextInt();
-			String[][] A = new String[N][N];
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int T = Integer.parseInt(br.readLine());
+		StringTokenizer st;
+		for (int t = 1; t <= T; t++) {
+			int N = Integer.parseInt(br.readLine());
+			int[][] A = new int[N][N];
 			for (int i = 0; i < N; i++) {
+				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < N; j++) {
-					A[i][j] = sc.next();
+					A[i][j] = Integer.parseInt(st.nextToken());
 				}
 			}
-			System.out.println("#" + test_case);
+			bw.write("#" + t + "\n");
 			for (int i = 0; i < N; i++) {
 				for (int j = N - 1; j >= 0; j--) {
-					System.out.print(A[j][i]);
+					bw.write(A[j][i] + "");
 				}
-				System.out.print(" ");
+				bw.write(" ");
 				for (int j = N - 1; j >= 0; j--) {
-					System.out.print(A[N - i - 1][j]);
+					bw.write(A[N - 1 - i][j] + "");
 				}
-				System.out.print(" ");
+				bw.write(" ");
 				for (int j = 0; j < N; j++) {
-					System.out.print(A[j][N - i - 1]);
+					bw.write(A[j][N - 1 - i] + "");
 				}
-				System.out.println();
+				bw.write("\n");
 			}
 		}
-		sc.close();
+		bw.flush();
+		bw.close();
+		br.close();
 	}
 }
