@@ -1,55 +1,62 @@
+import java.io.*;
 import java.util.*;
 
 public class Solution {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int T = sc.nextInt();
-		for (int test_case = 1; test_case <= T; test_case++) {
-			int N = sc.nextInt();
-			int M = sc.nextInt();
+	static int[] dr = { -1, 0, 1, 0 };
+	static int[] dc = { 0, 1, 0, -1 };
+	static int[] diagr = { -1, 1, 1, -1 };
+	static int[] diagc = { 1, 1, -1, -1 };
+	static int N;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int T = Integer.parseInt(br.readLine());
+		StringTokenizer st;
+		for (int t = 1; t <= T; t++) {
+			st = new StringTokenizer(br.readLine());
+			N = Integer.parseInt(st.nextToken());
+			int M = Integer.parseInt(st.nextToken());
 			int[][] A = new int[N][N];
 			for (int i = 0; i < N; i++) {
+				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < N; j++) {
-					A[i][j] = sc.nextInt();
+					A[i][j] = Integer.parseInt(st.nextToken());
 				}
 			}
 			int max = 0;
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
-					int sum = A[i][j];
-					// +
+					int sum1 = A[i][j];
+					int sum2 = A[i][j];
 					for (int k = 1; k < M; k++) {
-						if (j - k >= 0)
-							sum += A[i][j - k]; // 왼쪽
-						if (i - k >= 0)
-							sum += A[i - k][j]; // 위
-						if (j + k < N)
-							sum += A[i][j + k]; // 오른쪽
-						if (i + k < N)
-							sum += A[i + k][j]; // 아래
+						for (int d = 0; d < 4; d++) {
+							int nr = i + dr[d] * k;
+							int nc = j + dc[d] * k;
+							if (!check(nr, nc))
+								continue;
+							sum1 += A[nr][nc];
+						}
+						for (int d = 0; d < 4; d++) {
+							int nr = i + diagr[d] * k;
+							int nc = j + diagc[d] * k;
+							if (!check(nr, nc))
+								continue;
+							sum2 += A[nr][nc];
+						}
 					}
-					if (sum > max) {
-						max = sum;
-					}
-					sum = A[i][j];
-					// x
-					for (int k = 1; k < M; k++) {
-						if (i - k >= 0 && j - k >= 0)
-							sum += A[i - k][j - k]; // 왼쪽 위
-						if (i - k >= 0 && j + k < N)
-							sum += A[i - k][j + k]; // 오른쪽 위
-						if (i + k < N && j + k < N)
-							sum += A[i + k][j + k]; // 오른쪽 아래
-						if (i + k < N && j - k >= 0)
-							sum += A[i + k][j - k]; // 왼쪽 아래
-					}
-					if (sum > max) {
-						max = sum;
-					}
+					max = Math.max(max, sum1);
+					max = Math.max(max, sum2);
 				}
 			}
-			System.out.println("#" + test_case + " " + max);
+			bw.write("#" + t + " " + max + "\n");
 		}
-		sc.close();
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+
+	public static boolean check(int r, int c) {
+		return r >= 0 && r < N && c >= 0 && c < N;
 	}
 }
