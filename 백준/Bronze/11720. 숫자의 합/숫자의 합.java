@@ -5,10 +5,11 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int N = Integer.parseInt(br.readLine());
-		char[] cNum = br.readLine().toCharArray();
+		char[] A = br.readLine().toCharArray();
 		int sum = 0;
-		for (int i = 0; i < cNum.length; i++) {
-			sum += cNum[i] - '0';
+		for (int i = 0; i < A.length; i++) {
+			int num = (int) (A[i] - '0');
+			sum += num;
 		}
 		bw.write(sum + "\n");
 		bw.flush();
