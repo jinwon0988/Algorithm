@@ -2,62 +2,61 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int[] visited;
 	static ArrayList<Integer>[] A;
-	static int N, M, K, X;
-	static List<Integer> answer;
+	static boolean[] visited;
+	static ArrayList<Integer> R;
+	static int K;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
-		X = Integer.parseInt(st.nextToken());
+		int X = Integer.parseInt(st.nextToken());
 		A = new ArrayList[N + 1];
-		answer = new ArrayList<>();
 		for (int i = 1; i <= N; i++) {
 			A[i] = new ArrayList<>();
 		}
+		visited = new boolean[N + 1];
+		R = new ArrayList<>();
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
-			int S = Integer.parseInt(st.nextToken());
-			int E = Integer.parseInt(st.nextToken());
-			A[S].add(E);
+			int s = Integer.parseInt(st.nextToken());
+			int e = Integer.parseInt(st.nextToken());
+			A[s].add(e);
 		}
-		visited = new int[N + 1];
-		for (int i = 0; i <= N; i++) {
-			visited[i] = -1;
-		}
-		BFS(X);
-		for (int i = 0; i <= N; i++) {
-			if (visited[i] == K) {
-				answer.add(i);
-			}
-		}
-		if (answer.isEmpty()) {
-			bw.write(-1 + "\n");
-		} else {
-			for (int i : answer) {
+		bfs(X);
+		if (R.size() == 0)
+			bw.write("-1\n");
+		else {
+			Collections.sort(R);
+			for (int i : R)
 				bw.write(i + "\n");
-			}
 		}
 		bw.flush();
 		bw.close();
+		br.close();
 	}
 
-	public static void BFS(int node) {
-		Queue<Integer> queue = new LinkedList<>();
-		queue.add(node);
-		visited[node]++;
+	public static void bfs(int n) {
+		Queue<int[]> queue = new ArrayDeque<>();
+		visited[n] = true;
+		queue.add(new int[] { n, 0 });
 		while (!queue.isEmpty()) {
-			int now_node = queue.poll();
-			for (int i : A[now_node]) {
-				if (visited[i] == -1) {
-					visited[i] = visited[now_node] + 1;
-					queue.add(i);
-				}
+			int[] now = queue.poll();
+			int v = now[0];
+			int l = now[1];
+			if (l == K) {
+				R.add(v);
+				continue;
+			}
+			for (int i : A[v]) {
+				if (visited[i])
+					continue;
+				visited[i] = true;
+				queue.add(new int[] { i, l + 1 });
 			}
 		}
 	}
