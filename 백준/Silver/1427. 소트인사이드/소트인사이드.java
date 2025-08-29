@@ -10,20 +10,20 @@ public class Main {
 			A[i] = Integer.parseInt(input.substring(i, i + 1));
 		}
 		for (int i = 0; i < A.length; i++) {
-			int max = i;
+			int maxIdx = i;
 			for (int j = i + 1; j < A.length; j++) {
-				if (A[max] < A[j]) {
-					max = j;
+				if (A[maxIdx] < A[j]) {
+					maxIdx = j;
 				}
 			}
-			if (A[i] < A[max]) {
+			if (A[i] < A[maxIdx]) {
 				int temp = A[i];
-				A[i] = A[max];
-				A[max] = temp;
+				A[i] = A[maxIdx];
+				A[maxIdx] = temp;
 			}
 		}
-		for (int i = 0; i < A.length; i++) {
-			bw.write(A[i] + "");
+		for (int i : A) {
+			bw.write(i + "");
 		}
 		bw.flush();
 		bw.close();
