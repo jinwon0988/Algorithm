@@ -17,7 +17,7 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			int s = Integer.parseInt(st.nextToken());
 			int e = Integer.parseInt(st.nextToken());
-			bw.write(A[e] - A[s - 1] + "\n");
+			bw.write((A[e] - A[s - 1]) + "\n");
 		}
 		bw.flush();
 		bw.close();
