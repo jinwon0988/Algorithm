@@ -8,17 +8,18 @@ public class Main {
 		int N = Integer.parseInt(br.readLine());
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 		for (int i = 0; i < N; i++) {
-			pq.add(Integer.parseInt(br.readLine()));
+			pq.offer(Integer.parseInt(br.readLine()));
 		}
 		int sum = 0;
-		while (pq.size() > 1) {
+		while (pq.size() != 1) {
 			int a = pq.poll();
 			int b = pq.poll();
 			sum += a + b;
-			pq.add(a + b);
+			pq.offer(a + b);
 		}
 		bw.write(sum + "\n");
 		bw.flush();
 		bw.close();
+		br.close();
 	}
 }
