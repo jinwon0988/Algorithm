@@ -22,7 +22,7 @@ public class Main {
 				if (ch == '.')
 					A[i][j] = 0;
 				else
-					A[i][j] = A[i][j] = -1;
+					A[i][j] = -1;
 			}
 		}
 		st = new StringTokenizer(br.readLine());
@@ -42,7 +42,6 @@ public class Main {
 
 	static void bfs(int x, int y) {
 		ArrayDeque<int[]> queue = new ArrayDeque<>();
-		A[x][y] = 0;
 		queue.offer(new int[] { x, y, 0 });
 		while (!queue.isEmpty()) {
 			int[] now = queue.poll();
@@ -57,7 +56,7 @@ public class Main {
 						break;
 					if (A[nr][nc] == -1)
 						break;
-					if (A[nr][nc] < dist + 1 && A[nr][nc] != 0)
+					if (A[nr][nc] != 0 && A[nr][nc] < dist + 1)
 						break;
 					if (A[nr][nc] == dist + 1)
 						continue;
