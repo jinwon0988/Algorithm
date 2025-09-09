@@ -11,8 +11,9 @@ public class Main {
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		parent = new int[n];
-		for (int i = 0; i < n; i++)
+		for (int i = 0; i < n; i++) {
 			parent[i] = i;
+		}
 		int result = 0;
 		for (int i = 1; i <= m; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -42,6 +43,5 @@ public class Main {
 			return a;
 		else
 			return parent[a] = find(parent[a]);
-
 	}
 }
