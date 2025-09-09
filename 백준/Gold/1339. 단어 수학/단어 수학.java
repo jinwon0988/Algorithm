@@ -16,7 +16,7 @@ public class Main {
 		}
 		Arrays.sort(A);
 		int result = 0;
-		for (int i = 25; i >= 0; i--) {
+		for (int i = A.length - 1; i >= 0; i--) {
 			if (A[i] == 0)
 				break;
 			result += A[i] * (i - 16);
