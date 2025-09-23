@@ -27,6 +27,7 @@ public class Main {
 		for (int i = 1; i <= N; i++) {
 			bw.write(A[i] + " ");
 		}
+		bw.write("\n");
 		bw.flush();
 		bw.close();
 		br.close();
