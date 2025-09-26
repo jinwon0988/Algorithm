@@ -6,50 +6,49 @@ public class Main {
 	static boolean[] visited;
 	static boolean arrive;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
-		arrive = false;
 		A = new ArrayList[N];
-		visited = new boolean[N];
 		for (int i = 0; i < N; i++) {
-			A[i] = new ArrayList<Integer>();
+			A[i] = new ArrayList<>();
 		}
+		visited = new boolean[N];
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
-			int S = Integer.parseInt(st.nextToken());
-			int E = Integer.parseInt(st.nextToken());
-			A[S].add(E);
-			A[E].add(S);
+			int s = Integer.parseInt(st.nextToken());
+			int e = Integer.parseInt(st.nextToken());
+			A[s].add(e);
+			A[e].add(s);
 		}
 		for (int i = 0; i < N; i++) {
-			DFS(i, 1);
+			dfs(i, 1);
 			if (arrive)
 				break;
 		}
 		if (arrive)
-			bw.write(1 + "\n");
+			bw.write("1\n");
 		else
-			bw.write(0 + "\n");
+			bw.write("0\n");
 		bw.flush();
 		bw.close();
+		br.close();
 	}
 
-	private static void DFS(int v, int depth) {
-		if (depth == 5 || arrive) {
+	public static void dfs(int node, int depth) {
+		if (depth == 5) {
 			arrive = true;
 			return;
 		}
-		visited[v] = true;
-
-		for (int i : A[v]) {
-			if (!visited[i]) {
-				DFS(i, depth + 1);
-			}
+		visited[node] = true;
+		for (int i : A[node]) {
+			if (visited[i])
+				continue;
+			dfs(i, depth + 1);
 		}
-		visited[v] = false;
+		visited[node] = false;
 	}
 }
