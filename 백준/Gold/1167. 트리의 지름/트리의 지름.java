@@ -2,71 +2,77 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static boolean[] visited;
 	static ArrayList<Edge>[] A;
+	static boolean[] visited;
 	static int[] distance;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		int N = Integer.parseInt(br.readLine());
-		A = new ArrayList[N + 1];
-		for (int i = 1; i <= N; i++) {
-			A[i] = new ArrayList<Edge>();
+		int V = Integer.parseInt(br.readLine());
+		A = new ArrayList[V + 1];
+		for (int i = 1; i <= V; i++) {
+			A[i] = new ArrayList<>();
 		}
+		visited = new boolean[V + 1];
+		distance = new int[V + 1];
 		StringTokenizer st;
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < V; i++) {
 			st = new StringTokenizer(br.readLine());
-			int S = Integer.parseInt(st.nextToken());
+			int s = Integer.parseInt(st.nextToken());
 			while (true) {
-				int E = Integer.parseInt(st.nextToken());
-				if (E == -1)
+				int e = Integer.parseInt(st.nextToken());
+				if (e == -1)
 					break;
-				int V = Integer.parseInt(st.nextToken());
-				A[S].add(new Edge(E, V));
+				int v = Integer.parseInt(st.nextToken());
+				A[s].add(new Edge(e, v));
 			}
 		}
-		distance = new int[N + 1];
-		visited = new boolean[N + 1];
-		BFS(1);
+		bfs(1);
 		int max = 1;
-		for (int i = 2; i <= N; i++) {
-			if (distance[max] < distance[i]) {
+		for (int i = 2; i <= V; i++) {
+			if (distance[max] < distance[i])
 				max = i;
-			}
 		}
-		distance = new int[N + 1];
-		visited = new boolean[N + 1];
-		BFS(max);
-		Arrays.sort(distance);
-		bw.write(distance[N] + "\n");
+		visited = new boolean[V + 1];
+		distance = new int[V + 1];
+		bfs(max);
+		max = distance[1];
+		for (int i = 2; i <= V; i++) {
+			if (max < distance[i])
+				max = distance[i];
+		}
+		bw.write(max + "\n");
 		bw.flush();
 		bw.close();
+		br.close();
 	}
 
-	public static class Edge {
-		int e;
-		int cost;
-
-		public Edge(int e, int cost) {
-			this.e = e;
-			this.cost = cost;
+	public static void bfs(int node) {
+		Queue<Integer> queue = new ArrayDeque<>();
+		queue.offer(node);
+		visited[node] = true;
+		while (!queue.isEmpty()) {
+			int now = queue.poll();
+			for (Edge i : A[now]) {
+				int n = i.node;
+				int v = i.value;
+				if (visited[n])
+					continue;
+				visited[n] = true;
+				distance[n] = distance[now] + v;
+				queue.offer(n);
+			}
 		}
 	}
 
-	public static void BFS(int node) {
-		Queue<Integer> queue = new LinkedList<>();
-		queue.add(node);
-		visited[node] = true;
-		while (!queue.isEmpty()) {
-			int now_node = queue.poll();
-			for (Edge i : A[now_node]) {
-				if (!visited[i.e]) {
-					visited[i.e] = true;
-					queue.add(i.e);
-					distance[i.e] = distance[now_node] + i.cost;
-				}
-			}
+	static class Edge {
+		int node;
+		int value;
+
+		Edge(int node, int value) {
+			this.node = node;
+			this.value = value;
 		}
 	}
 }
